@@ -12,7 +12,7 @@ public class ReplyButtons {
 
     TextService textService = new TextService();
 
-    public ReplyKeyboardMarkup keyboardMarkupForSelectStudentOrTeacher() {
+    public ReplyKeyboardMarkup keyboardMarkup(String text1, String text2) {
 
         ArrayList<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
@@ -21,12 +21,8 @@ public class ReplyButtons {
         keyboardMarkup.setSelective(true);
         keyboardMarkup.setResizeKeyboard(true);
         keyboardMarkup.setOneTimeKeyboard(false);
-        try {
-            keyboardFirstRow.add(textService.getPropValues(Paths.BUTTON_STRING_PATH, "reply.messageForButton.Student"));
-            keyboardFirstRow.add(textService.getPropValues(Paths.BUTTON_STRING_PATH, "reply.messageForButton.Teacher"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            keyboardFirstRow.add(text1);
+            keyboardFirstRow.add(text2);
         keyboard.add(keyboardFirstRow);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
