@@ -1,7 +1,7 @@
 package by.adukar.telegrambot.service;
 
 import by.adukar.telegrambot.model.User;
-import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.ArrayList;
 import java.util.List;
