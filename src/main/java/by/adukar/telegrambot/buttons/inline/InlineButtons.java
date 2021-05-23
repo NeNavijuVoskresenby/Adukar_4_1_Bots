@@ -49,7 +49,7 @@ public class InlineButtons {
     }
 
     @SneakyThrows
-    public InlineKeyboardMarkup keyboardMarkup(String text1, String text2, String text3) {
+    public InlineKeyboardMarkup keyboardMarkup3(String text1, String text2, String text3) {
         List<List<InlineKeyboardButton>> listKeyboard = new ArrayList<>();
         List<InlineKeyboardButton> buttonsList = new ArrayList<>();
         InlineKeyboardButton keyboardButton1 = new InlineKeyboardButton();

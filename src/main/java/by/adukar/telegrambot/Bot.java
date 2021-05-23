@@ -40,48 +40,75 @@ public class Bot extends TelegramLongPollingBot {
 
     @SneakyThrows
     public void sendAnswerFromBot(Update update) {
+
         if (update.hasCallbackQuery()) {
             Long chatIdFromCallBack = update.getCallbackQuery().getFrom().getId().longValue();
             if (update.getCallbackQuery().getData().equals("Текст для кнопки")) {
                 sendMsg("Обработка инлайн кнопки", chatIdFromCallBack);
             }
-            if (update.getCallbackQuery().getData().equals("Пекин")) {
-                sendMsg("Пекин", chatIdFromCallBack);
-               sendPhoto("https://vandruy.by/wp-content/uploads/2018/08/201302121832369554-min-1024x683.jpeg", chatIdFromCallBack);
-                ;
-            }
-
 
             if (update.getCallbackQuery().getData().equals("Самые красивые места мира")) {
-                sendMsgWithButtons("Выбирайте место", inlineButtons.keyboardMarkup("Пекин" , "Дубай" , "Лондон"), chatIdFromCallBack);
+                sendMsgWithButtons("Выбирайте место", inlineButtons.keyboardMarkup3("Пекин" , "Дубай" , "Лондон"), chatIdFromCallBack);
                 }
             if (update.getCallbackQuery().getData().equals("Дубай")) {
                 sendMsg("Дубай", chatIdFromCallBack);
                 sendPhoto("https://q-xx.bstatic.com/xdata/images/hotel/max500/185219896.jpg?k=3d4cfc7f2a2e62fb2612b2973d1146bab1c3f40a348894b1a8c04a6ec5946d01&o=", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("25.0757595", "54.9475542", chatIdFromCallBack);
             }
             if (update.getCallbackQuery().getData().equals("Лондон")) {
                 sendMsg("Лондон", chatIdFromCallBack);
                 sendPhoto("https://cdn24.img.ria.ru/images/155635/45/1556354505_0:438:2000:1563_1920x0_80_0_0_64fb6d242c6240d9e44e5de1a31a7d6f.jpg", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("51.5285582", "-0.2416812", chatIdFromCallBack);
             }
+            if (update.getCallbackQuery().getData().equals("Пекин")) {
+                sendMsg("Пекин", chatIdFromCallBack);
+                sendPhoto("https://vandruy.by/wp-content/uploads/2018/08/201302121832369554-min-1024x683.jpeg", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("53.892288", "27.5760783", chatIdFromCallBack);
+            }
+            if (update.getCallbackQuery().getData().equals("Красивые постройки в Минске")) {
+                sendMsgWithButtons("Выбирайте место", inlineButtons.keyboardMarkup3("Костел Святых Сымона и Елены" , "Костел Девы Марии" , "Костел святого Роха"), chatIdFromCallBack);
+            }
+            if (update.getCallbackQuery().getData().equals("Костел Святых Сымона и Елены")) {
+                sendMsg("Костел Святых Сымона и Елены", chatIdFromCallBack);
+                sendPhoto("https://34travel.me/media/upload/images/2017/september/churches/new/IMG_8596.jpg", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("53.8965271", "27.5453701", chatIdFromCallBack);
+            }
+            if (update.getCallbackQuery().getData().equals("Костел Девы Марии")) {
+                sendMsg("Костел Девы Марии", chatIdFromCallBack);
+                sendPhoto("https://34travel.me/media/upload/images/2018/november/34dstpr/marii1.jpg", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("53.9031756", "27.552394", chatIdFromCallBack);
+            }
+            if (update.getCallbackQuery().getData().equals("Костел святого Роха")) {
+                sendMsg("Костел святого Роха", chatIdFromCallBack);
+                sendPhoto("https://34travel.me/media/upload/images/2018/november/34dstpr/IMG_0594.jpg", chatIdFromCallBack);
+                sendPoll(chatIdFromCallBack);
+                sendLocation("53.9109788,", "27.5780278", chatIdFromCallBack);
+            }
+
+
+
+
+
 
         } else {
-
-            Long chatId = update.getMessage().getChatId();
-            if (update.getMessage().getText().equals("Голосование")) {
-                sendPoll(chatId);
-            }
-            if (update.getMessage().getText().equals("Кубик")) {
+            long chatId = update.getMessage().getChatId();
+            if (update.getMessage().getText().equals("Кости")) {
                 sendDice(chatId);
             }
             if (update.getMessage().getText().equals("/start")) {
                 sendMsg("Начнём работать!", chatId);
                 sendMsgWithButtons("Нажмите на кнопки ниже перечисленные", inlineButtons.keyboardMarkup("Самые красивые места мира"), chatId);
+                sendMsgWithButtons(".", inlineButtons.keyboardMarkup("Красивые постройки в Минске" ), chatId);
             }
             if (update.getMessage().getText().equals("Выход назад")) {
                 sendMsg("Вы вернулись в первоначальное меню", chatId);
                 sendMsgWithButtons("Выбирайте,что хотите узнать,увидеть", replyButtons.keyboardMarkup("Самые красивые места мира","Кнопка 2"), chatId);
             }
-
         }
     }
 
@@ -89,9 +116,9 @@ public class Bot extends TelegramLongPollingBot {
     public synchronized void sendPoll(long chatId) {
         SendPoll sendPoll = new SendPoll();
         sendPoll.enableNotification();
-        sendPoll.setQuestion("Какая картинка вам понравилась во время просмотра? :)");
+        sendPoll.setQuestion("Понравилась ли вам данная картинка?");
         sendPoll.setAnonymous(true);
-        sendPoll.setOptions(List.of("Пекин", "Дубай", "Лондон"));
+        sendPoll.setOptions(List.of("Да", "Нет"));
         sendPoll.setChatId(chatId);
         sendPoll.setCorrectOptionId(2);
         execute(sendPoll);
@@ -118,7 +145,7 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public synchronized void sendContact(Long chatId) {
+    /*public synchronized void sendContact(Long chatId) {
         SendContact sendContact = new SendContact();
         sendContact.setPhoneNumber("+375447357152");
         sendContact.setFirstName("Anton");
@@ -143,11 +170,11 @@ public class Bot extends TelegramLongPollingBot {
         }
     }*/
 
-    public synchronized void sendLocation(Long chatId) {
+    public synchronized void sendLocation(String lat, String lon, long chatId) {
         SendLocation sendLocation = new SendLocation();
         sendLocation.setChatId(chatId);
-        sendLocation.setLatitude(Float.valueOf("-33.830693"));
-        sendLocation.setLongitude(Float.valueOf("151.219"));
+        sendLocation.setLatitude(Float.valueOf(lat));
+        sendLocation.setLongitude(Float.valueOf(lon));
 
         try {
             execute(sendLocation);

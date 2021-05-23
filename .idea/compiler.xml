@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="adukar" />
+        <module name="Adukar_4_1_Bots_kirill" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="14" />
